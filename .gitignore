@@ -1,0 +1,24 @@
+# Ignore Visual Studio files
+.vs/
+*.user
+*.suo
+*.cache
+*.log
+
+# Ignore build outputs
+bin/
+obj/
+
+# Ignore Docker local files
+*.env
+docker-compose.override.yml
+
+# Ignore database files
+*.mdf
+*.ldf
+
+# Environment & secrets
+.env
+.env.*
+appsettings.json
+appsettings.Production.json
