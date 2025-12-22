@@ -7,7 +7,7 @@ services:
     container_name: learning-sqlserver
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourStrong@Password123
+      - SA_PASSWORD=${DB_PASSWORD}
       - MSSQL_PID=Developer
     ports:
       - "1433:1433"
@@ -16,7 +16,7 @@ services:
     networks:
       - learning-network
     healthcheck:
-      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "YourStrong@Password123" -Q "SELECT 1" || exit 1
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "${DB_PASSWORD}" -Q "SELECT 1" || exit 1
       interval: 10s
       timeout: 3s
       retries: 10
@@ -31,7 +31,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=db_learning3;User Id=sa;Password=YourStrong@Password123;TrustServerCertificate=True;MultipleActiveResultSets=true
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=db_learning3;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=true
       - Stripe__SecretKey=${STRIPE_SECRET_KEY}
       - Stripe__PublishableKey=${STRIPE_PUBLISHABLE_KEY}
       - SendGrid__SecretKey=${SENDGRID_SECRET_KEY}
