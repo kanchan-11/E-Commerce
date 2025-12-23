@@ -15,12 +15,7 @@ services:
       - sqlserver-data:/var/opt/mssql
     networks:
       - learning-network
-    healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $${DB_PASSWORD} -Q 'SELECT 1' || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 20s
+   
 
   # ASP.NET Core Application
   learningweb:
@@ -38,8 +33,7 @@ services:
     ports:
       - "5000:8080"
     depends_on:
-      sqlserver:
-        condition: service_healthy
+      - sqlserver
     networks:
       - learning-network
     restart: unless-stopped
