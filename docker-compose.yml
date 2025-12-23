@@ -36,6 +36,8 @@ services:
       - sqlserver
     networks:
       - learning-network
+    volumes:
+      - /srv/ecommerce/uploads:/app/wwwroot/images
     restart: unless-stopped
 
 volumes:
