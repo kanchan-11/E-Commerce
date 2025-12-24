@@ -73,7 +73,7 @@ namespace LearningWeb.Areas.Admin.Controllers
                         if (file != null)
                         {
                             string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                            string productPath = @"images/products/product-" + productVM.Product.Id;
+                            string productPath = Path.Combine("images", "products", "product-" + productVM.Product.Id);
                             string finalPath = Path.Combine(wwwRootPath, productPath);
                             if (!Directory.Exists(finalPath))
                             {
@@ -150,7 +150,7 @@ namespace LearningWeb.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
-            string productPath = @"images/products/product-" + id;
+            string productPath = Path.Combine("images", "products", "product-" + id);
             string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
             if (Directory.Exists(finalPath))
             {
