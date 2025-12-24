@@ -64,7 +64,7 @@ namespace LearningWeb.Areas.Admin.Controllers
                 {
                     _unitOfWork.Product.Update(productVM.Product);
                 }
-
+                _unitOfWork.Save();
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if (files != null)
                 {
@@ -73,7 +73,7 @@ namespace LearningWeb.Areas.Admin.Controllers
                         if (file != null)
                         {
                             string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                            string productPath = @"images\products\product-" + productVM.Product.Id;
+                            string productPath = @"images/products/product-" + productVM.Product.Id;
                             string finalPath = Path.Combine(wwwRootPath, productPath);
                             if (!Directory.Exists(finalPath))
                             {
@@ -85,7 +85,7 @@ namespace LearningWeb.Areas.Admin.Controllers
                             }
                             ProductImage prodImage = new()
                             {
-                                ImageUrl = @"\" + productPath + @"\" + fileName,
+                                ImageUrl = @"/" + productPath + @"/" + fileName,
                                 ProductId = productVM.Product.Id
                             };
                             if (productVM.Product.ProductImages == null)
@@ -121,7 +121,7 @@ namespace LearningWeb.Areas.Admin.Controllers
                 if (!string.IsNullOrEmpty(imageToBeDeleted.ImageUrl))
                 {
                     var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath,
-                                                    imageToBeDeleted.ImageUrl.TrimStart('\\'));
+                                                    imageToBeDeleted.ImageUrl.TrimStart('/'));
                     if (System.IO.File.Exists(oldImagePath))
                     {
                         System.IO.File.Delete(oldImagePath);
@@ -150,7 +150,7 @@ namespace LearningWeb.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
-            string productPath = @"images\products\product-" + id;
+            string productPath = @"images/products/product-" + id;
             string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
             if (Directory.Exists(finalPath))
             {
