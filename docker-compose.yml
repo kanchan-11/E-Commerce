@@ -37,7 +37,7 @@ services:
     networks:
       - learning-network
     volumes:
-      - /srv/ecommerce/uploads:/app/wwwroot/images
+      - /srv/ecommerce/uploads:/app/wwwroot/images/products
     restart: unless-stopped
 
 volumes:
