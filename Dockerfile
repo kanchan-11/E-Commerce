@@ -32,9 +32,9 @@ WORKDIR /app
 # Install necessary tools for troubleshooting (optional - remove for smaller image)
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
-# Create directory for uploaded images and set permissions
-RUN mkdir -p /app/wwwroot/images/product && \
-    chmod -R 755 /app/wwwroot
+# Create wwwroot directory structure
+RUN mkdir -p /app/wwwroot && \
+    chmod -R 777 /app/wwwroot
 
 # Expose ports (HTTP and HTTPS)
 EXPOSE 8080
@@ -47,10 +47,11 @@ COPY --from=publish /app/publish .
 ENV ASPNETCORE_URLS=http://+:8080
 ENV ASPNETCORE_ENVIRONMENT=Production
 
-# Create a non-root user for security (optional but recommended)
-RUN useradd -m -s /bin/bash appuser && \
-    chown -R appuser:appuser /app
-USER appuser
+# Run as root to avoid permission issues (simpler for uploads)
+# Comment out if you prefer security, but uncomment the lines below if needed
+# RUN useradd -m -s /bin/bash appuser && \
+#     chown -R appuser:appuser /app
+# USER appuser
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
